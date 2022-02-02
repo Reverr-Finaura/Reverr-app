@@ -22,7 +22,7 @@ const InputField = (props) => {
                         maxLength={props.maxLength} />
                 </View>
                 <TouchableOpacity onPress={props.Eyelick}>
-                    <Icon name={props.showIcon} size={props.showIconsize} color={props.showIconolor} style={{ paddingStart: 50 }} />
+                    <Icon name={props.showIcon} size={props.showIconsize} color={props.showIconolor} />
                 </TouchableOpacity>
             </View>
         </View>
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
         marginTop: -5,
         paddingBottom: 0,
         height: 40,
-        width: 200
+        width: 250
     }
 })
 

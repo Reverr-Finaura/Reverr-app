@@ -53,13 +53,19 @@ const Home = () => {
                 article={Article}
                 save={Saved}
             />
-            <ScrollView showsVerticalScrollIndicator={false}>
-                {Progress ? <ProgressScreen /> :
-                    News ? <NewsScreen /> :
+            <View style={{ flex: 1 }}>
+                {Progress ?
+                    <ScrollView showsVerticalScrollIndicator={false}>
+                        <ProgressScreen />
+                    </ScrollView>
+                    :
+                    News ?
+
+                        <NewsScreen /> :
                         Article ? <ArticleScreen /> :
                             Saved ? <SavedScreen /> : null
                 }
-            </ScrollView>
+            </View>
         </View>
     );
 };

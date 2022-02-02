@@ -5,8 +5,6 @@ import AppColors from '../../Constaint/AppColors';
 import { Data } from '../../dummy-data/dummyData';
 
 const MentorListCard = () => {
-
-    console.log(Data);
     return (
         <View>
             <View style={styles.Container}>

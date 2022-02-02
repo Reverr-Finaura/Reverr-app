@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React from 'react';
 import Ionic from 'react-native-vector-icons/Ionicons';
 import AppColors from '../../../Constaint/AppColors';
@@ -17,20 +17,19 @@ const ProgressScreen = () => {
             <View style={styles.listCard}>
                 <MentorListCard />
             </View>
-            <View style={{ marginHorizontal: 15, marginTop: 10 }}>
+            <View style={{ marginHorizontal: 15, marginTop: 10, }}>
                 <Text style={styles.text}>Article</Text>
                 <View style={styles.line}></View>
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
-                    <Text style={[styles.text, { fontFamily: "Poppins-Bold" }]}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Text style={[styles.text, { fontFamily: "Poppins-Bold", }]}>
                         How to create a start up
                     </Text>
                     <Ionic name='heart' size={20} color="red" style={{ paddingStart: 50 }} />
-
-                </View >
-                <Text style={[styles.text, { fontSize: 14 }]}>GPS software boost lets smartphones pinpoint location to within 20 cm
+                </View>
+                <Text style={[styles.text, { fontSize: 14, }]}>GPS software boost lets smartphones pinpoint location to within 20 cm
                 </Text>
-            </View>
 
+            </View>
         </View>
     );
 };
