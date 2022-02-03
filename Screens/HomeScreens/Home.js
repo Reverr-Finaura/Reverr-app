@@ -9,6 +9,7 @@ import ProgressScreen from './TopTabScreens/ProgressScreen';
 import NewsScreen from './TopTabScreens/NewsScreen';
 import ArticleScreen from './TopTabScreens/ArticleScreen';
 import SavedScreen from './TopTabScreens/SavedScreen';
+import ArticalDetailsScreen from './TopTabScreens/ArticalDetailsScreen';
 
 const Home = () => {
 
@@ -17,56 +18,71 @@ const Home = () => {
     const [News, setNews] = useState(false);
     const [Article, setArticle] = useState(false);
     const [Saved, setSaved] = useState(false);
+    const [ArticalDetails, setArticalDetails] = useState(true);
     return (
         <View style={styles.screen}>
-            <Header
-                onPress={() => { logout(); }}
-            />
-            <TopTabBar
-                onPressProgress={() => {
-                    setProgress(true);
-                    setNews(false);
-                    setArticle(false);
-                    setSaved(false);
-                }}
-                onPressNews={() => {
-                    setNews(true);
-                    setProgress(false);
-                    setArticle(false);
-                    setSaved(false);
-                    console.log("clecked")
-                }}
-                onPressArticle={() => {
-                    setArticle(true);
-                    setNews(false);
-                    setProgress(false);
-                    setSaved(false);
-                }}
-                onPressSaved={() => {
-                    setSaved(true);
-                    setNews(false);
-                    setArticle(false);
-                    setProgress(false);
-                }}
-                progress={Progress}
-                news={News}
-                article={Article}
-                save={Saved}
-            />
-            <View style={{ flex: 1 }}>
-                {Progress ?
-                    <ScrollView showsVerticalScrollIndicator={false}>
-                        <ProgressScreen />
-                    </ScrollView>
-                    :
-                    News ?
+            {ArticalDetails ?
+                (
+                    <View style={{ flex: 1 }}>
+                        <Header
+                            onPress={() => { logout(); }}
+                        />
+                        <TopTabBar
+                            onPressProgress={() => {
+                                setProgress(true);
+                                setNews(false);
+                                setArticle(false);
+                                setSaved(false);
+                            }}
+                            onPressNews={() => {
+                                setNews(true);
+                                setProgress(false);
+                                setArticle(false);
+                                setSaved(false);
+                                console.log("clecked")
+                            }}
+                            onPressArticle={() => {
+                                setArticle(true);
+                                setNews(false);
+                                setProgress(false);
+                                setSaved(false);
+                            }}
+                            onPressSaved={() => {
+                                setSaved(true);
+                                setNews(false);
+                                setArticle(false);
+                                setProgress(false);
+                            }}
+                            progress={Progress}
+                            news={News}
+                            article={Article}
+                            save={Saved}
+                        />
+                        <View style={{ flex: 1 }}>
+                            {Progress ?
+                                <ScrollView showsVerticalScrollIndicator={false}>
+                                    <ProgressScreen />
+                                </ScrollView>
+                                :
+                                News ?
+                                    <NewsScreen /> :
+                                    Article ? <ArticleScreen
+                                        ArticalDetails={ArticalDetails}
+                                        onPress={() => { setArticalDetails(false) }}
+                                    /> :
+                                        Saved ? <SavedScreen /> : null
+                            }
+                        </View>
+                    </View>) : (
+                    <View style={{ flex: 1 }}>
+                        <ArticalDetailsScreen
+                            BackBotton={() => { setArticalDetails(true) }}
+                        />
+                    </View>
 
-                        <NewsScreen /> :
-                        Article ? <ArticleScreen /> :
-                            Saved ? <SavedScreen /> : null
-                }
-            </View>
+                )}
         </View>
+
     );
 };
 

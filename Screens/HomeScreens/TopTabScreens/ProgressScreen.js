@@ -3,7 +3,7 @@ import React from 'react';
 import Ionic from 'react-native-vector-icons/Ionicons';
 import AppColors from '../../../Constaint/AppColors';
 import ProgressCard from '../../../Componants/HomeScreenComponants/ProgressScreenComponants/ProgressCard';
-import MentorListCard from '../../../Componants/HomeScreenComponants/MentorListCard';
+import MentorListCard from '../../../Componants/HomeScreenComponants/ProgressScreenComponants/MentorListCard';
 const ProgressScreen = () => {
     return (
         <View style={styles.screen}>

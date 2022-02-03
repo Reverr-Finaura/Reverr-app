@@ -17,12 +17,12 @@ const Header = (props) => {
                 <TouchableOpacity style={styles.calender}>
                     <Icon name='calendar-alt' size={22} color="black" />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.logo}>
+                <View style={styles.logo}>
                     <Image style={{
                         height: 100,
                         width: 100,
                     }} source={require("../../assets/Images/logo.png")} />
-                </TouchableOpacity>
+                </View>
                 <TouchableOpacity style={styles.notification}>
                     <Icon name='bell' size={22} color="black" />
                 </TouchableOpacity>

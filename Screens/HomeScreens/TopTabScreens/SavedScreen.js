@@ -1,19 +1,30 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React from 'react';
-
+import YourFavMentorList from '../../../Componants/HomeScreenComponants/SavedScreenComponants/YourFavMentorList';
+import YourLibrary from '../../../Componants/HomeScreenComponants/SavedScreenComponants/YourLibrary';
+import SavedCourses from '../../../Componants/HomeScreenComponants/SavedScreenComponants/SavedCourses';
 const SavedScreen = () => {
     return (
-        <View style={styles.screen}>
-            <Text>SavedScreen
-                SavedScreen</Text>
-        </View>
+        <ScrollView showsVerticalScrollIndicator={false} style={styles.screen}>
+            <View style={styles.mentors}>
+                <YourFavMentorList />
+            </View>
+            <View style={styles.mentors}>
+                <YourLibrary />
+            </View>
+            <View style={styles.mentors}>
+                <SavedCourses />
+            </View>
+        </ScrollView>
     );
 };
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        marginTop: -90
-
+    },
+    mentors: {
+        marginTop: 10,
+        paddingHorizontal: 5
     }
 });
 export default SavedScreen;

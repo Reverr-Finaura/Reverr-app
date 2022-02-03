@@ -1,15 +1,19 @@
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import AppColors from '../../Constaint/AppColors';
-import { Data } from '../../dummy-data/dummyData';
+import AppColors from '../../../Constaint/AppColors';
+import { Data } from '../../../dummy-data/dummyData';
 
-const MentorListCard = () => {
+const SavedCourses = () => {
+
+    const data = [
+
+    ]
     return (
         <View>
             <View style={styles.Container}>
                 <View style={styles.heading}>
-                    <Text style={styles.text}>Popular Today</Text>
+                    <Text style={styles.text}>Saved Courses</Text>
                     <Icon name='arrow-right' size={20} color={AppColors.FontsColor} />
                 </View>
                 <View>
@@ -33,12 +37,13 @@ const styles = StyleSheet.create({
     Container: {
         width: '100%',
         borderRadius: 10,
+        marginBottom: 10,
         backgroundColor: AppColors.BtnClr,
         elevation: 5
     },
     heading: {
         paddingTop: 5,
-        marginHorizontal: -150,
+        marginHorizontal: -170,
         flexDirection: 'row',
         justifyContent: 'space-evenly'
     },
@@ -78,4 +83,4 @@ const styles = StyleSheet.create({
 
     }
 });
-export default MentorListCard;
+export default SavedCourses;
