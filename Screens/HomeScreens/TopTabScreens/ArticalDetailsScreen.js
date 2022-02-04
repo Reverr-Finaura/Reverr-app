@@ -1,10 +1,15 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import React from 'react';
 import Backbtn from '../../../Componants/Backbtn';
 import AppColors from '../../../Constaint/AppColors';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { ArticalData } from '../../../dummy-data/Artical-Data';
 
 const ArticalDetailsScreen = (props) => {
+
+    console.log(ArticalData.find((item) => {
+        item == "Space"
+    }));
     return (
         <View style={{ flex: 1 }}>
             <View style={styles.header}>
@@ -12,31 +17,27 @@ const ArticalDetailsScreen = (props) => {
                 <Text style={styles.heading}>Article</Text>
             </View>
             <View style={styles.DetailsContainer}>
-                <Text style={styles.subHeading}>Market Research</Text>
-                <View style={styles.details}>
-                    <Text style={styles.text}>Market Research Mentor is the terminal where all
-                        industrial, commercial and profitmaking venture will
-                        get the best research reports of the market in all sectors
-                        like automotive, electronics, pharmaceuticals and healthcare,
-                        food and beverages etc.Market Research Mentor is the terminal
-                        where all industrial, commercial and profitmaking venture will
-                        get the best research reports of the market in all sectors like
-                        automotive, electronics,
-                        pharmaceuticals and healthcare, food and beverages etc.
-                    </Text>
-                </View>
-                <View style={styles.BtnContainer}>
-                    <TouchableOpacity style={styles.PreviousBtn}>
-                        <Icon name='arrow-left' size={20} color={AppColors.FontsColor} />
-                        <Text style={{ marginStart: 20, color: AppColors.FontsColor, fontFamily: "Poppins-Regular" }}>Previous</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.NextBtn}>
+                <FlatList
+                    data={ArticalData}
+                    renderItem={({ item }) => (
+                        <View>
+                            <Text>{ }</Text>
 
-                        <Icon name='arrow-right' size={20} color={AppColors.FontsColor} />
-                        <Text style={{ marginEnd: 20, color: AppColors.FontsColor, fontFamily: "Poppins-Regular" }}>Previous</Text>
+                        </View>
+                    )}
+                />
+            </View>
+            <View style={styles.BtnContainer}>
+                <TouchableOpacity style={styles.PreviousBtn}>
+                    <Icon name='arrow-left' size={20} color={AppColors.FontsColor} />
+                    <Text style={{ marginStart: 20, color: AppColors.FontsColor, fontFamily: "Poppins-Regular" }}>Previous</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.NextBtn}>
 
-                    </TouchableOpacity>
-                </View>
+                    <Icon name='arrow-right' size={20} color={AppColors.FontsColor} />
+                    <Text style={{ marginEnd: 20, color: AppColors.FontsColor, fontFamily: "Poppins-Regular" }}>Next</Text>
+
+                </TouchableOpacity>
             </View>
         </View>
     );

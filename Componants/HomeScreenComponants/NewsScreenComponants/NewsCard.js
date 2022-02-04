@@ -9,7 +9,7 @@ const NewsCard = (props) => {
         <View style={{ height: '100%', paddingBottom: 40 }}>
             <FlatList
                 data={props.data}
-                nestedScrollEnabled={true}
+                showsHorizontalScrollIndicator={props.indicator}
                 numColumns={clmn}
                 renderItem={({ item }) => (
                     <TouchableOpacity activeOpacity={0.6} style={styles.NewsContainer}>

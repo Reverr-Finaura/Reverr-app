@@ -65,7 +65,8 @@ const Home = () => {
                                 </ScrollView>
                                 :
                                 News ?
-                                    <NewsScreen /> :
+                                    <NewsScreen />
+                                    :
                                     Article ? <ArticleScreen
                                         ArticalDetails={ArticalDetails}
                                         onPress={() => { setArticalDetails(false) }}

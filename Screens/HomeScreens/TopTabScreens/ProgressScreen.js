@@ -21,14 +21,13 @@ const ProgressScreen = () => {
                 <Text style={styles.text}>Article</Text>
                 <View style={styles.line}></View>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={[styles.text, { fontFamily: "Poppins-Bold", }]}>
+                    <Text style={[styles.text, { fontFamily: "Poppins-Bold", fontSize: 15 }]}>
                         How to create a start up
                     </Text>
-                    <Ionic name='heart' size={20} color="red" style={{ paddingStart: 50 }} />
+                    <Ionic name='heart' size={20} color="red" style={{ marginStart: '31%' }} />
                 </View>
                 <Text style={[styles.text, { fontSize: 14, }]}>GPS software boost lets smartphones pinpoint location to within 20 cm
                 </Text>
-
             </View>
         </View>
     );
@@ -41,13 +40,16 @@ const styles = StyleSheet.create({
     },
     DetailsConatainer: {
         marginHorizontal: 20,
-        alignItems: 'center'
+        paddingHorizontal: 30,
+        paddingVertical: 10
+
 
     },
     wlcm: {
         color: AppColors.FontsColor,
         fontFamily: "Poppins-Regular",
-        fontSize: 22
+        fontSize: 22,
+        justifyContent: 'flex-start'
 
     },
     subtext: {

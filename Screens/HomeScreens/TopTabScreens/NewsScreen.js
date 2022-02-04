@@ -8,6 +8,10 @@ import Paginator from '../../../Componants/HomeScreenComponants/NewsScreenCompon
 
 
 const NewsScreen = () => {
+    const scrollX = useRef(new Animated.Value(0)).current;
+
+    const images = new Array(6).fill('https://images.unsplash.com/photo-1556740749-887f6717d7e4')
+
 
     return (
         <View style={styles.screen}>
@@ -17,10 +21,16 @@ const NewsScreen = () => {
                 </View>
                 <TrendingNewsCard
                     data={NewsData}
+                    onScroll={Animated.event(
+                        [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+                        {
+                            useNativeDriver: false,
+                        }
+                    )}
                 />
-                <Paginator data={NewsData} />
+                <Paginator data={NewsData} scrollX={scrollX} />
             </View>
-            <View style={{ height: '55%', marginBottom: 400 }}>
+            <View style={{ height: '53.5%', marginBottom: 400 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                     <Text style={styles.heading}>News</Text>
                     <TouchableOpacity style={{ marginStart: 210 }}>
@@ -29,6 +39,7 @@ const NewsScreen = () => {
                 </View>
                 <NewsCard
                     data={NewsData}
+                    indicator={false}
                 />
             </View>
 
