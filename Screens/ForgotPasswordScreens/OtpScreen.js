@@ -10,6 +10,7 @@ const OtpScreen = (props) => {
     const [otp, setOtp] = React.useState("");
     const Otp = props.route.params.Otp;
     const Email = props.route.params.Email;
+    const OldPassword = props.route.params.Password;
 
     return (
         <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss() }}>
@@ -37,7 +38,7 @@ const OtpScreen = (props) => {
                             if (Otp != otp) {
                                 alert("wrong otp")
                             } else {
-                                navigation.navigate("Reset", { EmailID: Email });
+                                navigation.navigate("Reset", { EmailID: Email, oldPassword: OldPassword });
                             }
                         }}
                     />

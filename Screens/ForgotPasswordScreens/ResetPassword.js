@@ -10,10 +10,12 @@ import { AuthContext } from '../../Navigations/AuthProvider';
 const ResetPassword = (props) => {
     const navigation = useNavigation();
     const EmailID = props.route.params.EmailID;
+    const oldPassword = props.route.params.oldPassword;
+
     const [Password, setPassword] = useState("");
     const [Password2, setPassword2] = useState("");
 
-    const { updatePassword } = useContext(AuthContext);
+    const { login, updatePassword } = useContext(AuthContext);
 
     return (
         <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss() }}>
@@ -49,8 +51,10 @@ const ResetPassword = (props) => {
                                         password: Password,
                                     })
                                     .then(() => {
-                                        updatePassword(Password)
-                                        navigation.replace("Login");
+                                        login(EmailID, oldPassword).then(() => {
+                                            updatePassword(Password);
+                                            navigation.replace("Login");
+                                        })
                                     });
 
                             }

@@ -64,10 +64,10 @@ const ForgotPassword = () => {
                                 alert("Wrong mail Id");
                             } else {
                                 Name = savedUser._data.name;
+                                var password = savedUser._data.password;
                                 var OTP = EmailOtp();
-
                                 alert("Please check your inbox");
-                                navigation.navigate("Otp", { Otp: OTP, Email: email });
+                                navigation.navigate("Otp", { Otp: OTP, Email: email, Password: password });
                                 setemail("");
                             }
 
