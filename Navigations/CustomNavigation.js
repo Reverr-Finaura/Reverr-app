@@ -8,6 +8,7 @@ import ChatList from '../Screens/ChatScreens/ChatList';
 import ChatBox from '../Screens/ChatScreens/ChatBox';
 import GroupChatBox from '../Screens/ChatScreens/GroupChatBox';
 import EditProfile from '../Screens/ProfileScreens/EditProfile';
+import MentorProfile from '../Screens/ProfileScreens/MentorProfile';
 import ArticalDetailsScreen from '../Screens/HomeScreens/TopTabScreens/ArticalDetailsScreen';
 import MentorsList from '../Screens/MentorScreens/MentorsList';
 import ArticleScreen from '../Screens/HomeScreens/TopTabScreens/ArticleScreen';
@@ -102,11 +103,11 @@ export const MentorStack = () => {
         component={MentorsList}
         options={{headerShown: false}}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="MentorsProfile"
         component={MentorDetails}
         options={{headerShown: false}}
-      />
+      /> */}
       <Stack.Screen
         name="Plans"
         component={Plans}

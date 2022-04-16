@@ -6,6 +6,7 @@ import Calander from '../MentorScreens/Calander';
 import Profile from '../MentorScreens/Profile';
 import Settings from '../Screens/ProfileScreens/Settings';
 import EditProfile from '../Screens/ProfileScreens/EditProfile';
+import MentorProfile from '../Screens/ProfileScreens/MentorProfile';
 import Notifications from '../MentorScreens/Notifications';
 import ChatList from '../Screens/ChatScreens/ChatList';
 import ChatBox from '../Screens/ChatScreens/ChatBox';
@@ -28,6 +29,11 @@ export const MentorHomeStack = () => {
       <Stack.Screen
         name="EditProfile"
         component={EditProfile}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Setting"
+        component={Settings}
         options={{headerShown: false}}
       />
       <Stack.Screen

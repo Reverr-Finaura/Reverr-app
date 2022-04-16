@@ -25,7 +25,7 @@ const ArticalDetailsScreen = props => {
         <ImageBackground
           style={styles.articalImage}
           source={{
-            uri: articaldetails && articaldetails.image,
+            uri: articaldetails.image,
           }}>
           <View style={styles.overlay}>
             <View style={{marginTop: '5%'}}>
@@ -37,12 +37,12 @@ const ArticalDetailsScreen = props => {
               />
             </View>
             <Text style={styles.title}>{articaldetails.heading}</Text>
-            <Text style={styles.author}>Auther:{articaldetails.author}</Text>
           </View>
         </ImageBackground>
       </View>
       <ScrollView style={styles.body}>
         <Text style={styles.text}>{articaldetails.body}</Text>
+        <Text style={styles.author}>By {articaldetails.author}</Text>
       </ScrollView>
     </View>
   );
@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
   author: {
     color: AppColors.FontsColor,
     fontFamily: 'Poppins-Regular',
+    marginBottom:'5%'
   },
   body: {
     paddingHorizontal: '8%',
