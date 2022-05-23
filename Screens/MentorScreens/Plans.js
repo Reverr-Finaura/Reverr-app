@@ -50,7 +50,7 @@ const Plans = props => {
       const order = {
         orderId: oId,
         orderCurrency: 'INR',
-        orderAmount: '1',
+        orderAmount: plan,
       };
       const requestOptions = {
         method: 'POST',
@@ -144,6 +144,7 @@ const Plans = props => {
         .collection('Users')
         .doc(mentor)
         .update({clients: [...mentorClients, state.email]});
+      
       //create msg path here;
     }
   };
