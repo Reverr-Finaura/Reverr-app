@@ -17,7 +17,6 @@ const Width = Dimensions.get('screen').width;
 const Height = Dimensions.get('screen').height;
 
 const Dashboard = () => {
-  const learner = Trending;
   const {chatstate, chatdispatch} = useContext(ChatContext);
   return (
     <HeaderLayout>
