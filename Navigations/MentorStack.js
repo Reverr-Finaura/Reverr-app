@@ -2,7 +2,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from '../MentorScreens/Home';
 import Dashboard from '../MentorScreens/Dashboard';
-import Calander from '../MentorScreens/Calander';
+import Calander from '../MentorScreens/Calendar/Calander';
 import Profile from '../MentorScreens/Profile';
 import Settings from '../Screens/ProfileScreens/Settings';
 import EditProfile from '../Screens/ProfileScreens/EditProfile';
@@ -11,6 +11,7 @@ import ChatList from '../Screens/ChatScreens/ChatList';
 import ChatBox from '../Screens/ChatScreens/ChatBox';
 import ViewIndividuaProfile from '../Screens/ProfileScreens/ViewProfile';
 import {VideoCall} from '../Screens/videocall/videoCall';
+import EditCalendar from '../MentorScreens/Calendar/EditCalendar';
 
 const Stack = createNativeStackNavigator();
 
@@ -83,6 +84,11 @@ export const MentorCalanderStack = () => {
       <Stack.Screen
         name="Calander"
         component={Calander}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="editCalendar"
+        component={EditCalendar}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

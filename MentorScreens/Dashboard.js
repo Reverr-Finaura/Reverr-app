@@ -13,8 +13,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import CustomCard from '../Componants/CustomCard';
 import {ChatContext} from '../App';
 
-const Width = Dimensions.get('screen').width;
-const Height = Dimensions.get('screen').height;
+const Width = Dimensions.get('window').width;
+const Height = Dimensions.get('window').height;
 
 const Dashboard = () => {
   const {chatstate, chatdispatch} = useContext(ChatContext);

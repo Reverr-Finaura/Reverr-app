@@ -1,8 +1,9 @@
 import auth from '@react-native-firebase/auth';
-import React from 'react';
+import React, {useContext} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import ImagePicker from 'react-native-image-crop-picker';
 import storage from '@react-native-firebase/storage';
+import {UserContext} from '../App';
 
 var date = new Date().getDate();
 var month = new Date().getMonth() + 1;
@@ -29,15 +30,22 @@ export const ChangeDp = (loading, setLoading, dispatch) => {
         .ref('Images/' + fileUrl)
         .putFile(url)
         .then(async () => {
-          const udata = await auth().currentcUser;
-          var userEmail = udata.email;
           var imgURL = await storage()
             .ref('Images/' + fileUrl)
             .getDownloadURL();
-          dispatch({type: 'UPDATEPHOTO', payload: imgURL});
-          await firestore().collection('Users').doc(userEmail).update({
-            image: imgURL,
-          });
+          console.log('url', imgURL);
+          setLoading(false);
+          // dispatch({type: 'UPDATEPHOTO', payload: imgURL});
+          /* await firestore()
+            .collection('Users')
+            .doc(state.email)
+            .update({
+              image: imgURL,
+            })
+            .then(() => {
+              alert('changed');
+              setLoading(false);
+            }); */
         });
     } catch (error) {
       alert('Cancel');

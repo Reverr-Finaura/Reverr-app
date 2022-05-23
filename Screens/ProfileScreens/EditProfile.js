@@ -83,8 +83,8 @@ const EditProfile = () => {
   const navigation = useNavigation();
 
   const saveChanges = async () => {
-    var abt= About == '>/s<'?"":About;
-    var ind =Industry == '>/s<'?"":Industry;
+    var abt = About == '>/s<' ? '' : About;
+    var ind = Industry == '>/s<' ? '' : Industry;
 
     const Experience = [
       ex1 == '>/s<' ? '' : ex1,
@@ -112,7 +112,7 @@ const EditProfile = () => {
     };
     await firestore().collection('Users').doc(state.email).update(data);
     dispatch({type: 'UPDATE', payload: data});
-    navigation.navigate("Individual");
+    navigation.navigate('Individual');
   };
   return (
     <View style={styles.screen}>
@@ -136,6 +136,7 @@ const EditProfile = () => {
       <ScrollView style={styles.mainContainer}>
         <EditCard
           value={Name}
+          Title="Name"
           style={styles.name}
           onChangeText={n => {
             setName(n);
@@ -149,6 +150,7 @@ const EditProfile = () => {
           value={About == '>/s<' ? 'Enter About' : About}
         />
         <EditCard
+          Title="Position"
           value={Industry == '>/s<' ? 'Enter Your Industry' : Industry}
           style={[
             styles.name,
@@ -278,6 +280,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     display: 'flex',
     flex: 1,
+    paddingHorizontal: '4%',
     marginTop: '25%',
   },
   dp: {
