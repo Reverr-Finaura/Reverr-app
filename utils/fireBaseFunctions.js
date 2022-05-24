@@ -18,7 +18,8 @@ export const GetUser = async setData => {
   setData(savedUser._data);
 };
 
-export const ChangeDp = (loading, setLoading, dispatch) => {
+export const ChangeDp = (loading, setLoading, updateState) => {
+  const {state, dispatch} = useContext(UserContext);
   ImagePicker.openPicker({
     mediaType: 'photo',
   }).then(image => {
@@ -35,8 +36,8 @@ export const ChangeDp = (loading, setLoading, dispatch) => {
             .getDownloadURL();
           console.log('url', imgURL);
           setLoading(false);
-          // dispatch({type: 'UPDATEPHOTO', payload: imgURL});
-          /* await firestore()
+          updateState({type: 'UPDATEPHOTO', payload: imgURL});
+          await firestore()
             .collection('Users')
             .doc(state.email)
             .update({
@@ -45,7 +46,7 @@ export const ChangeDp = (loading, setLoading, dispatch) => {
             .then(() => {
               alert('changed');
               setLoading(false);
-            }); */
+            });
         });
     } catch (error) {
       alert('Cancel');
