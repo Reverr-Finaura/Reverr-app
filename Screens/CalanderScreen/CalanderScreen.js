@@ -6,12 +6,13 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import AppColors from '../../Constaint/AppColors';
 import Icon2 from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {DataTable} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
+import { UserContext } from '../../App';
 
 const Height = Dimensions.get('screen').height;
 const Width = Dimensions.get('screen').width;
@@ -75,6 +76,9 @@ function getCalender(month, year) {
 }
 
 const CalanderScreen = props => {
+
+  const {state,dispatch} = useContext(UserContext);
+  
   var montharr = [
     'January',
     'February',
@@ -106,7 +110,7 @@ const CalanderScreen = props => {
 
   const [calender, setCalender] = useState([]);
   const navigation = useNavigation();
-
+  var today = date.getDate();
   function Prev() {
     setCalender(getCalender(month - 1, year));
     setmonth(month - 1);
@@ -117,9 +121,17 @@ const CalanderScreen = props => {
     setmonth(month + 1);
   }
 
+  var edays = [];
+  state.events.map(e=>{
+    if(month==e.month-1){
+      edays.push(e.date);
+    }
+  })
+  // console.log(edays)
+
   useEffect(() => {
     setCalender(getCalender(month, year));
-
+    // console.log(month)
     // console.log(calender.map(week=>week))
   }, []);
 
@@ -165,7 +177,7 @@ const CalanderScreen = props => {
               data={calender[0]}
               horizontal
               renderItem={({item}) => (
-                <TouchableOpacity key={item} style={styles.daysName}>
+                <TouchableOpacity key={item} style={ edays.includes(item)?styles.meeting:item==today?styles.currday:styles.daysName}>
                   <DataTable.Cell>{item}</DataTable.Cell>
                 </TouchableOpacity>
               )}
@@ -176,7 +188,7 @@ const CalanderScreen = props => {
               data={calender[1]}
               horizontal
               renderItem={({item}) => (
-                <TouchableOpacity key={item} style={styles.daysName}>
+                <TouchableOpacity key={item} style={ edays.includes(item)?styles.meeting:item==today?styles.currday:styles.daysName}>
                   <DataTable.Cell>{item}</DataTable.Cell>
                 </TouchableOpacity>
               )}
@@ -187,7 +199,7 @@ const CalanderScreen = props => {
               data={calender[2]}
               horizontal
               renderItem={({item}) => (
-                <TouchableOpacity key={item} style={styles.daysName}>
+                <TouchableOpacity key={item} style={ edays.includes(item)?styles.meeting:item==today?styles.currday:styles.daysName}>
                   <DataTable.Cell>{item}</DataTable.Cell>
                 </TouchableOpacity>
               )}
@@ -198,7 +210,7 @@ const CalanderScreen = props => {
               data={calender[3]}
               horizontal
               renderItem={({item}) => (
-                <TouchableOpacity key={item} style={styles.daysName}>
+                <TouchableOpacity key={item} style={ edays.includes(item)?styles.meeting:item==today?styles.currday:styles.daysName}>
                   <DataTable.Cell>{item}</DataTable.Cell>
                 </TouchableOpacity>
               )}
@@ -209,7 +221,7 @@ const CalanderScreen = props => {
               data={calender[4] && calender[4]}
               horizontal
               renderItem={({item}) => (
-                <TouchableOpacity key={item} style={styles.daysName}>
+                <TouchableOpacity key={item}style={ edays.includes(item)?styles.meeting:item==today?styles.currday:styles.daysName}>
                   <DataTable.Cell>{item}</DataTable.Cell>
                 </TouchableOpacity>
               )}
@@ -220,7 +232,7 @@ const CalanderScreen = props => {
               data={calender[5] && calender[5]}
               horizontal
               renderItem={({item}) => (
-                <TouchableOpacity key={item} style={styles.daysName}>
+                <TouchableOpacity key={item} style={ edays.includes(item)?styles.meeting:item==today?styles.currday:styles.daysName}>
                   <DataTable.Cell>{item}</DataTable.Cell>
                 </TouchableOpacity>
               )}
@@ -269,8 +281,24 @@ const styles = StyleSheet.create({
   },
   daysName: {
     flexDirection: 'row',
+    marginStart: Width / 28,
+    marginEnd: Width / 28
+  },
+  currday: {
+    flexDirection: 'row',
     marginStart: Width / 30,
-    marginEnd: Width / 30,
+    marginEnd: Width / 300,
+    backgroundColor:"white",
+    height:22,
+    padding:"2.5%",
+    marginTop:"25%",
+    borderRadius:100
+  },
+  meeting: {
+    flexDirection: 'row',
+    marginStart: Width / 28,
+    marginEnd: Width / 28,
+    backgroundColor:"green"
   },
   text: {
     fontFamily: 'Poppins-SemiBold',

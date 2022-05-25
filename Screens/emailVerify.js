@@ -81,7 +81,8 @@ const emailVerify = props => {
         savedPosts:[],
         savedCourses:[],
         savedMentors:[],
-        orders:[]
+        orders:[],
+        events:[]
       };
 
       await firestore()
@@ -118,7 +119,8 @@ const emailVerify = props => {
         savedPosts:[],
         savedCourses:[],
         savedMentors:[],
-        orders:[]
+        orders:[],
+        events:[]
       };
       await firestore()
         .collection('Users')
@@ -143,7 +145,8 @@ const emailVerify = props => {
         rating: 0,
         totalRating: 0,
         plans: [],
-        orders:[]
+        orders:[],
+        events:[]
       };
 
       await firestore()

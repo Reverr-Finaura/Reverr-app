@@ -35,8 +35,7 @@ const ArticalList = props => {
     }
   }
   const naigation = useNavigation();
-  // console.log(ArticalSlice, 'AST');
-  if (!articlestate) {
+if (articlestate==[]) {
     return <ArticalLoader />;
   } else {
     return (

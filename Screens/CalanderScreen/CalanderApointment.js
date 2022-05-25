@@ -5,21 +5,23 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import AppColors from '../../Constaint/AppColors';
 import Backbtn from '../../Componants/Backbtn';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import CustomBtn from '../../Componants/CustomBtn';
 import LinearGradient from 'react-native-linear-gradient';
+import firestore from '@react-native-firebase/firestore';
+import { UserContext } from '../../App';
 
 const Height = Dimensions.get('window').height;
 const Width = Dimensions.get('window').width;
 
 // const schedulingData = [20, 21, 22, 23, 24, 25, 26, 27];
-const times1 = [9, 10, 11];
-const times2 = [12, 13, 14];
-const times3 = [15, 16, 17];
+const times1 = ["9:00", "10:00", "11:00"];
+const times2 = ["12:00", "13:00", "14:00"];
+const times3 = ["15:00", "16:00", "17:00"];
 
 var montharr = [
   'January',
@@ -52,19 +54,21 @@ const CalanderApointment = props => {
   const [selectedTime1, setSelectedTime1] = useState(-1);
   const [selectedTime2, setSelectedTime2] = useState(-1);
   const [selectedTime3, setSelectedTime3] = useState(-1);
+  const {state, dispatch} = useContext(UserContext);
   const navigation = useNavigation();
   // console.log(dates);
+  
   var dt = new Date();
   var today = dt.getDate();
-  // console.log(today);
+  var Tdays = new Date(dt.getFullYear(), dt.getMonth() + 1, 0).getDate();
   var schedulingData = [
     today,
-    today + 1,
-    today + 2,
-    today + 3,
-    today + 4,
-    today + 5,
-    today + 6,
+    today + 1 > Tdays?today-Tdays+1:today+1,
+    today + 2 > Tdays?today-Tdays+2:today+2,
+    today + 3 > Tdays?today-Tdays+3:today+3,
+    today + 4 > Tdays?today-Tdays+4:today+4,
+    today + 5 > Tdays?today-Tdays+5:today+5,
+    today + 6 > Tdays?today-Tdays+6:today+6,
   ];
 
   var temp = [];
@@ -80,11 +84,29 @@ const CalanderApointment = props => {
     ans.push(temp[i]);
   }
 
-  // useEffect(() => {}, [selectedDate]);
-
   const submitHandler = () => {
     var date = schedulingData[selectedDate];
-    var time;
+    var time = selectedTime1!=-1?times1[selectedTime1]:selectedTime2!=-1?times2[selectedTime2]:times3[selectedTime3];
+    var month
+    if(date < today){
+      month = dt.getMonth()+2;
+    }else{
+      month = dt.getMonth()+1;
+    }
+    var event = {
+      month,
+      date,
+      time,
+      approved:false
+    }
+    dispatch({type: 'NEWEVENT', payload: event})
+    firestore().collection("Users").doc(state.email).update({
+      events:[
+      ...state.events,
+      event
+      ] 
+    }).then(()=>console.log("added event"))
+    
   };
   return (
     <View style={styles.screen}>
@@ -273,7 +295,7 @@ const CalanderApointment = props => {
                         styles.timebtn,
                         {opacity: selectedDate > -1 ? 1 : 0.1},
                       ]}>
-                      <Text style={styles.btnText}>{item}:00 am</Text>
+                      <Text style={styles.btnText}>{item} </Text>
                     </LinearGradient>
                   </TouchableOpacity>
                 )}
@@ -298,7 +320,7 @@ const CalanderApointment = props => {
                         styles.timebtn,
                         {opacity: selectedDate > -1 ? 1 : 0.1},
                       ]}>
-                      <Text style={styles.btnText}>{item}:00 am</Text>
+                      <Text style={styles.btnText}>{item} </Text>
                     </LinearGradient>
                   </TouchableOpacity>
                 )}
@@ -323,7 +345,7 @@ const CalanderApointment = props => {
                         styles.timebtn,
                         {opacity: selectedDate > -1 ? 1 : 0.1},
                       ]}>
-                      <Text style={styles.btnText}>{item}:00 am</Text>
+                      <Text style={styles.btnText}>{item} </Text>
                     </LinearGradient>
                   </TouchableOpacity>
                 )}
@@ -356,7 +378,7 @@ const CalanderApointment = props => {
                         styles.timebtn,
                         {opacity: selectedDate > -1 ? 1 : 0.1},
                       ]}>
-                      <Text style={styles.btnText}>{item}:00 pm</Text>
+                      <Text style={styles.btnText}>{item} </Text>
                     </LinearGradient>
                   </TouchableOpacity>
                 )}
@@ -381,7 +403,7 @@ const CalanderApointment = props => {
                         styles.timebtn,
                         {opacity: selectedDate > -1 ? 1 : 0.1},
                       ]}>
-                      <Text style={styles.btnText}>{item}:00 pm</Text>
+                      <Text style={styles.btnText}>{item} </Text>
                     </LinearGradient>
                   </TouchableOpacity>
                 )}
@@ -406,7 +428,7 @@ const CalanderApointment = props => {
                         styles.timebtn,
                         {opacity: selectedDate > -1 ? 1 : 0.1},
                       ]}>
-                      <Text style={styles.btnText}>{item}:00 pm</Text>
+                      <Text style={styles.btnText}>{item} </Text>
                     </LinearGradient>
                   </TouchableOpacity>
                 )}
@@ -439,7 +461,7 @@ const CalanderApointment = props => {
                         styles.timebtn,
                         {opacity: selectedDate > -1 ? 1 : 0.1},
                       ]}>
-                      <Text style={styles.btnText}>{item}:00 pm</Text>
+                      <Text style={styles.btnText}>{item} </Text>
                     </LinearGradient>
                   </TouchableOpacity>
                 )}
@@ -464,7 +486,7 @@ const CalanderApointment = props => {
                         styles.timebtn,
                         {opacity: selectedDate > -1 ? 1 : 0.1},
                       ]}>
-                      <Text style={styles.btnText}>{item}:00 pm</Text>
+                      <Text style={styles.btnText}>{item} </Text>
                     </LinearGradient>
                   </TouchableOpacity>
                 )}
@@ -489,7 +511,7 @@ const CalanderApointment = props => {
                         styles.timebtn,
                         {opacity: selectedDate > -1 ? 1 : 0.1},
                       ]}>
-                      <Text style={styles.btnText}>{item}:00 pm</Text>
+                      <Text style={styles.btnText}>{item} </Text>
                     </LinearGradient>
                   </TouchableOpacity>
                 )}
@@ -501,7 +523,9 @@ const CalanderApointment = props => {
             selectedTime1 > -1 || selectedTime2 > -1 || selectedTime3 > -1
               ? 0.7
               : 1
-          }>
+          }
+          onPress={()=>submitHandler()}
+          >
           <LinearGradient
             colors={[AppColors.primarycolor, '#012437']}
             start={{x: 0, y: 1.3}}
@@ -515,6 +539,7 @@ const CalanderApointment = props => {
                     : 0.1,
               },
             ]}>
+            
             <Text
               style={[
                 styles.btnText,
