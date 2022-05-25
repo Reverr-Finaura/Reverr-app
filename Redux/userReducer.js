@@ -109,6 +109,15 @@ export const reducer = (state, action) => {
       ]
     };
   }
+  if (action.type === 'NEWEVENT') {
+    return {
+      ...state,
+      events:[
+        ...state.events,
+        action.payload,
+      ]
+    };
+  }
 
   return state;
 };
