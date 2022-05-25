@@ -9,7 +9,7 @@ import {UserContext} from '../../App';
 
 const HeaderLayout = props => {
   const {state, dispatch} = useContext(UserContext);
-  const [modelVisible, setModelVisible] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const navigation = useNavigation();
   //console.log(state.image);
@@ -24,7 +24,7 @@ const HeaderLayout = props => {
           );
         }}
         onPressCalander={() => {
-          setModelVisible(true);
+          setIsOpen(true);
         }}
         onPressNoti={() => {
           navigation.navigate('notification');
@@ -35,17 +35,17 @@ const HeaderLayout = props => {
         DpUrl={state && state.image}
       />
       <ModelView
-        ShowModal={modelVisible}
+        ShowModal={isOpen}
         onCloseModal={() => {
-          setModelVisible(false);
+          setIsOpen(false);
         }}>
         <CalanderScreen
           onClose={() => {
-            setModelVisible(false);
+            setIsOpen(false);
           }}
+          setModel={setIsOpen}
         />
       </ModelView>
-
       {props.children}
     </View>
   );

@@ -231,7 +231,8 @@ const CalanderScreen = props => {
           style={styles.btn}
           activeOpacity={0.7}
           onPress={() => {
-            navigation.navigate('apointment',{dates});
+            navigation.navigate('apointment', {dates});
+            props.setModel(false);
           }}>
           <Text style={styles.text}>Proceed</Text>
         </TouchableOpacity>
