@@ -35,7 +35,8 @@ import SavedPosts from '../Screens/RoomScreens/SavedPosts';
 import SavedArticals from '../Screens/HomeScreens/TopTabScreens/SavedArticals';
 import SavedMentorsList from '../Screens/MentorScreens/SavedMentorsList';
 import CalanderApointment from '../Screens/CalanderScreen/CalanderApointment';
-
+import AddedMentors from '../Screens/CalanderScreen/AddedMentors';
+import CommentsScreen from '../Screens/RoomScreens/CommentsScreen';
 const Stack = createNativeStackNavigator();
 
 export const HomeStack = () => {
@@ -157,6 +158,11 @@ export const HomeStack = () => {
         component={SavedMentorsList}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name="addedMontrs"
+        component={AddedMentors}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };
@@ -223,6 +229,11 @@ export const RoomStack = () => {
       <Stack.Screen
         name="demo"
         component={SkeltonLoader}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="comments"
+        component={CommentsScreen}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

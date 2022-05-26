@@ -1,58 +1,43 @@
 import {
   View,
   Text,
+  StyleSheet,
+  Dimensions,
   TouchableOpacity,
   Image,
-  StyleSheet,
   FlatList,
-  Dimensions,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import AppColors from '../../Constaint/AppColors';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Backbtn from '../../Componants/Backbtn';
 import {GetAllMentors} from '../../utils/fireBaseFunctions';
 import {useNavigation} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import LinearGradient from 'react-native-linear-gradient';
 
 const Width = Dimensions.get('window').width;
 const Height = Dimensions.get('window').height;
 
-const MentorsList = props => {
-  const navigation = useNavigation();
-  // const mentorData = props.route.params.mentorData;
+const AddedMentors = props => {
+  const dates = props.route.params.dates;
   const [all, setAll] = useState();
   const [listColumn, setListColumn] = useState(2);
+  const navigation = useNavigation();
   useEffect(() => {
     GetAllMentors(setAll);
   }, []);
-
   return (
-    //<HeaderLayout>
     <View style={styles.screen}>
-      {/*  <LinearGradient
-        colors={[AppColors.primarycolor, '#012437']}
-        start={{x: 0, y: 1.3}}
-        end={{x: 1, y: 0.5}}
-        style={styles.Header}>
-        <Text
-          style={{
-            fontFamily: 'Poppins-Bold',
-            color: AppColors.FontsColor,
-            fontSize: 17,
-          }}>
-          Mentors
-        </Text>
-      </LinearGradient> */}
-      <Text
-        style={{
-          fontFamily: 'Poppins-Bold',
-          color: AppColors.FontsColor,
-          fontSize: 17,
-          marginStart: '5%',
-        }}>
-        Mentors
-      </Text>
-      <View>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <Backbtn
+          IconSize={30}
+          onPress={() => {
+            navigation.goBack();
+          }}
+        />
+        <Text style={styles.headerTitle}>Your Mentors</Text>
+      </View>
+      <View style={{marginTop: '8%'}}>
         <FlatList
           data={all}
           numColumns={2}
@@ -65,8 +50,8 @@ const MentorsList = props => {
               <TouchableOpacity
                 style={{alignItems: 'center'}}
                 onPress={() => {
-                  navigation.navigate('MentorsProfile', {
-                    profileDetails: item,
+                  navigation.navigate('apointment', {
+                    dates: dates,
                   });
                 }}>
                 <Image style={styles.Dp} source={{uri: item.image}} />
@@ -116,22 +101,18 @@ const MentorsList = props => {
         />
       </View>
     </View>
-    // </HeaderLayout>
   );
 };
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    marginTop: '6%',
     backgroundColor: AppColors.primarycolor,
   },
-  Header: {
-    height: Height / 12,
-    marginHorizontal: '5%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 10,
-    marginBottom: '2%',
+  headerTitle: {
+    color: AppColors.FontsColor,
+    marginStart: '20%',
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: 18,
   },
   Card: {
     marginVertical: 10,
@@ -175,4 +156,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-export default MentorsList;
+export default AddedMentors;

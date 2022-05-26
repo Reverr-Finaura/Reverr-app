@@ -50,7 +50,6 @@ const Room = () => {
   const [features, setFeatures] = useState(true);
   const [subs, setSubs] = useState(false);
   const [message, setMessage] = useState();
-  const [writeComments, setWriteComments] = useState(false);
   const navigation = useNavigation();
   const {state, dispatch} = useContext(UserContext);
   const [popup, setPopup] = useState(false);
@@ -58,7 +57,6 @@ const Room = () => {
   const [seemoreId, setSeemoreId] = useState();
   const [id, setId] = useState();
   const [owner, setOwner] = useState(false);
-  const [currpostid, setcurrpostid] = useState('none');
   const {savedpoststate, savedpostdispatch} = useContext(SavedPostContext);
 
   const clickhandler = post => {
@@ -410,7 +408,9 @@ const Room = () => {
                     <View style={{flexDirection: 'row', alignItems: 'center'}}>
                       <TouchableOpacity
                         onPress={() => {
-                          setWriteComments(!writeComments);
+                          navigation.navigate('comments', {
+                            postData: item,
+                          });
                         }}>
                         <Icon
                           name="comment"
@@ -438,64 +438,7 @@ const Room = () => {
                       </Text>
                     </View>
                   </View>
-                  {writeComments && (
-                    /*currpostid == item.id &&*/ <View>
-                      <View
-                        style={{flexDirection: 'row', alignItems: 'center'}}>
-                        <View
-                          style={{
-                            height: 20,
-                            width: 20,
-                            borderRadius: 20,
-                            overflow: 'hidden',
-                          }}>
-                          <Image
-                            source={{uri: state.image}}
-                            style={{
-                              height: '100%',
-                              width: '100%',
-                              borderRadius: 20,
-                            }}
-                          />
-                        </View>
-                        <Text
-                          style={{
-                            color: AppColors.FontsColor,
-                            marginStart: '4%',
-                          }}>
-                          {state.name}
-                        </Text>
-                      </View>
-                      <View
-                        style={{
-                          width: '100%',
-                          paddingVertical: 2,
-                          flexDirection: 'row',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                        }}>
-                        <TextInput
-                          placeholder="Write Something"
-                          style={{color: AppColors.FontsColor}}
-                          placeholderTextColor={AppColors.infoFonts}
-                          value={message}
-                          onChangeText={e => {
-                            setMessage(e);
-                          }}
-                        />
-                        <TouchableOpacity
-                          onPress={() => {
-                            commentPost(item.id, item, message);
-                          }}>
-                          <Icon3
-                            name="send"
-                            size={22}
-                            color={AppColors.FontsColor}
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    </View>
-                  )}
+
                   <CustomPopup
                     key={item.id}
                     open={popup}

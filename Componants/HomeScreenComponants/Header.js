@@ -47,9 +47,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: '3%',
     height: '10%',
   },
-  dp: {
-    marginStart: 10,
-  },
   calender: {
     justifyContent: 'center',
     alignItems: 'center',
