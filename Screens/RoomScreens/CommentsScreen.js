@@ -22,7 +22,7 @@ const CommentsScreen = props => {
   const postData = props.route.params.postData;
   const navigation = useNavigation();
   const [comment, setComment] = useState('');
-  //console.log(postData.comments, 'posts');
+  console.log(postData.comments, 'posts');
   return (
     <View style={styles.screen}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>

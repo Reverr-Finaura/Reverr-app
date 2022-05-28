@@ -6,7 +6,7 @@ import {
   Dimensions,
   FlatList,
 } from 'react-native';
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import AppColors from '../../Constaint/AppColors';
 import Backbtn from '../../Componants/Backbtn';
 import {useNavigation} from '@react-navigation/native';
@@ -56,6 +56,9 @@ const OpenBook = props => {
     resetans();
   };
   const navigation = useNavigation();
+
+  useEffect(() => {}, [currIndex]);
+
   return (
     <View style={styles.screen}>
       <Backbtn
@@ -69,6 +72,7 @@ const OpenBook = props => {
           data={bookData}
           horizontal
           ref={pagesRef}
+          showsHorizontalScrollIndicator={false}
           pagingEnabled
           renderItem={({item, index}) => {
             return (
@@ -238,6 +242,7 @@ const OpenBook = props => {
               </TouchableOpacity>
             </View>
           ))}
+        <Text>{currIndex}</Text>
         <View style={styles.progressContainer}>
           <View style={[styles.complete, {width: progress}]}></View>
         </View>
@@ -268,15 +273,18 @@ const styles = StyleSheet.create({
   },
   pageContainer: {
     width: Width,
-    paddingHorizontal: '3%',
-    paddingVertical: '5%',
+    height: Height / 1.25,
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
   page: {
     backgroundColor: AppColors.BtnClr,
-    flex: 1,
+    width: Width / 1.05,
+    height: Height / 1.3,
     paddingHorizontal: '5%',
     paddingVertical: '9%',
-    borderRadius: 30,
+    borderRadius: 20,
   },
   StatusContainer: {
     paddingBottom: '5%',
