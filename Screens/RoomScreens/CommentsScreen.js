@@ -21,8 +21,24 @@ const Height = Dimensions.get('window').height;
 const CommentsScreen = props => {
   const postData = props.route.params.postData;
   const navigation = useNavigation();
-  const [comment, setComment] = useState('');
-  console.log(postData.comments, 'posts');
+
+  if (postData.comments.length > 0) {
+    //console log
+    postData.comments.map(comment => {
+      console.log(
+        'text : ',
+        comment.text,
+        ' commentedby : ',
+        comment.commentedby.name,
+        ' imageurl : ',
+        comment.commentedby.image,
+        ' commentid : ',
+        comment.commentid,
+      );
+    });
+  } else {
+    console.log('no comments');
+  }
   return (
     <View style={styles.screen}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
