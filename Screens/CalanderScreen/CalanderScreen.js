@@ -13,7 +13,6 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import {DataTable} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import {UserContext} from '../../App';
-
 const Height = Dimensions.get('screen').height;
 const Width = Dimensions.get('screen').width;
 
@@ -121,7 +120,7 @@ const CalanderScreen = props => {
   }
 
   var edays = [];
-  state.events.map(e => {
+  state?.events?.map(e => {
     if (month == e.month - 1) {
       edays.push(e.date);
     }
@@ -304,6 +303,7 @@ const CalanderScreen = props => {
           style={styles.btn}
           activeOpacity={0.7}
           onPress={() => {
+            console.log("hello")
             navigation.navigate('addedMontrs', {dates});
             props.setModel(false);
           }}>

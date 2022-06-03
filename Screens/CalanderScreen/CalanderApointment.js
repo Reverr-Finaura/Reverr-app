@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
+  ToastAndroid
 } from 'react-native';
 import React, {useState, useEffect, useContext} from 'react';
 import AppColors from '../../Constaint/AppColors';
@@ -14,6 +15,7 @@ import CustomBtn from '../../Componants/CustomBtn';
 import LinearGradient from 'react-native-linear-gradient';
 import firestore from '@react-native-firebase/firestore';
 import { UserContext } from '../../App';
+import { Button } from 'react-native-paper';
 
 const Height = Dimensions.get('window').height;
 const Width = Dimensions.get('window').width;
@@ -55,9 +57,15 @@ const CalanderApointment = props => {
   const [selectedTime2, setSelectedTime2] = useState(-1);
   const [selectedTime3, setSelectedTime3] = useState(-1);
   const {state, dispatch} = useContext(UserContext);
+  const [availability,setAvailability]=useState([0,1,1,1,1,1,1]);
+  const [pointDay,setPointDay]=useState(0);
+  const [count,setCount]=useState(0);
+  var daylist = ["Sunday","Monday","Tuesday","Wednesday ","Thursday","Friday","Saturday"];
   const navigation = useNavigation();
   // console.log(dates);
-  
+  const showToast = (msg) => {
+    ToastAndroid.show(msg, ToastAndroid.SHORT);
+  };
   var dt = new Date();
   var today = dt.getDate();
   var Tdays = new Date(dt.getFullYear(), dt.getMonth() + 1, 0).getDate();
@@ -84,6 +92,19 @@ const CalanderApointment = props => {
     ans.push(temp[i]);
   }
 
+  useEffect(()=>{
+    const user=firestore().collection("Users").doc(props.route.params.mentor.key).onSnapshot(documentSnapshot => {
+      console.log('User data: ', documentSnapshot.data());
+      setAvailability(documentSnapshot.data().availability);
+      console.log(availability);
+      var today = new Date();
+      var day = today.getDay();
+      
+      console.log("Today is : " + daylist[day]+","+day);
+      setPointDay(day);
+      //setCount(7-day);
+    });
+  },[])
   const submitHandler = () => {
     var date = schedulingData[selectedDate];
     var time = selectedTime1!=-1?times1[selectedTime1]:selectedTime2!=-1?times2[selectedTime2]:times3[selectedTime3];
@@ -97,7 +118,15 @@ const CalanderApointment = props => {
       month,
       date,
       time,
-      approved:false
+      approved:false,
+      mentor_email:props.route.params.mentor.key
+    }
+    var mentor_event={
+      month,
+      date,
+      time,
+      approved:false,
+      client_email:state.email
     }
     dispatch({type: 'NEWEVENT', payload: event})
     firestore().collection("Users").doc(state.email).update({
@@ -105,7 +134,18 @@ const CalanderApointment = props => {
       ...state.events,
       event
       ] 
-    }).then(()=>console.log("added event"))
+    }).then(()=>{
+      firestore().collection("Users").doc(event.mentor_email).update({
+        Appointement_request:firestore.FieldValue.arrayUnion(mentor_event),
+        notification:firestore.FieldValue.arrayUnion(mentor_event)
+      }).then(()=>{
+        console.log("added event")
+        showToast("Event added succerssfully!");
+    }).catch(e=>{
+      showToast("Error in booking event!");
+    })
+    })
+    // .then(()=>console.log("added event"))
     
   };
   return (
@@ -170,8 +210,10 @@ const CalanderApointment = props => {
                     paddingHorizontal: 8,
                     borderRadius: 6,
                   }}>
-                  <Text style={styles.daysName}>{ans[index]}</Text>
-                  <Text style={styles.date}>{item}</Text>
+                   {(index+ pointDay>6 || (index+pointDay<=6 && availability[index+pointDay]==0 )) && <Text style={styles.redDay}>{ans[index]}</Text>}
+                  {(index+ pointDay>6 || (index+pointDay<=6 && availability[index+pointDay]==0 )) && <Text style={styles.redDate}>{item}</Text>}
+                  {index+pointDay<=6 && availability[index+pointDay]==1 && <Text style={styles.daysName}>{ans[index]}</Text>}
+                  {index+pointDay<=6 && availability[index+pointDay]==1 && <Text style={styles.date}>{item}</Text>}
                 </TouchableOpacity>
               )}
               {index == 1 && (
@@ -185,8 +227,10 @@ const CalanderApointment = props => {
                     paddingHorizontal: 8,
                     borderRadius: 6,
                   }}>
-                  <Text style={styles.daysName}>{ans[index]}</Text>
-                  <Text style={styles.date}>{item}</Text>
+                  {(index+ pointDay>6 || (index+pointDay<=6 && availability[index+pointDay]==0 )) && <Text style={styles.redDay}>{ans[index]}</Text>}
+                  {(index+ pointDay>6 || (index+pointDay<=6 && availability[index+pointDay]==0 )) && <Text style={styles.redDate}>{item}</Text>}
+                  {index+pointDay<=6 && availability[index+pointDay]==1 && <Text style={styles.daysName}>{ans[index]}</Text>}
+                  {index+pointDay<=6 && availability[index+pointDay]==1 && <Text style={styles.date}>{item}</Text>}
                 </TouchableOpacity>
               )}
               {index == 2 && (
@@ -200,8 +244,10 @@ const CalanderApointment = props => {
                     paddingHorizontal: 8,
                     borderRadius: 6,
                   }}>
-                  <Text style={styles.daysName}>{ans[index]}</Text>
-                  <Text style={styles.date}>{item}</Text>
+                   {(index+ pointDay>6 || (index+pointDay<=6 && availability[index+pointDay]==0 )) && <Text style={styles.redDay}>{ans[index]}</Text>}
+                  {(index+ pointDay>6 || (index+pointDay<=6 && availability[index+pointDay]==0 )) && <Text style={styles.redDate}>{item}</Text>}
+                  {index+pointDay<=6 && availability[index+pointDay]==1 && <Text style={styles.daysName}>{ans[index]}</Text>}
+                  {index+pointDay<=6 && availability[index+pointDay]==1 && <Text style={styles.date}>{item}</Text>}
                 </TouchableOpacity>
               )}
               {index == 3 && (
@@ -215,8 +261,11 @@ const CalanderApointment = props => {
                     paddingHorizontal: 8,
                     borderRadius: 6,
                   }}>
-                  <Text style={styles.daysName}>{ans[index]}</Text>
-                  <Text style={styles.date}>{item}</Text>
+                    {console.log(index+pointDay)}
+                   {(index+ pointDay>6 || (index+pointDay<=6 && availability[index+pointDay]==0 )) && <Text style={styles.redDay}>{ans[index]}</Text>}
+                  {(index+ pointDay>6 || (index+pointDay<=6 && availability[index+pointDay]==0 )) && <Text style={styles.redDate}>{item}</Text>}
+                  {index+pointDay<=6 && availability[index+pointDay]==1 && <Text style={styles.daysName}>{ans[index]}</Text>}
+                  {index+pointDay<=6 && availability[index+pointDay]==1 && <Text style={styles.date}>{item}</Text>}
                 </TouchableOpacity>
               )}
               {index == 4 && (
@@ -230,8 +279,12 @@ const CalanderApointment = props => {
                     paddingHorizontal: 8,
                     borderRadius: 6,
                   }}>
-                  <Text style={styles.daysName}>{ans[index]}</Text>
-                  <Text style={styles.date}>{item}</Text>
+                  {/* <Text style={styles.daysName}>{ans[index]}</Text>
+                  <Text style={styles.date}>{item}</Text> */}
+                   {(index+ pointDay>6 || (index+pointDay<=6 && availability[index+pointDay]==0 )) && <Text style={styles.redDay}>{ans[index]}</Text>}
+                  {(index+ pointDay>6 || (index+pointDay<=6 && availability[index+pointDay]==0 )) && <Text style={styles.redDate}>{item}</Text>}
+                  {index+pointDay<=6 && availability[index+pointDay]==1 && <Text style={styles.daysName}>{ans[index]}</Text>}
+                  {index+pointDay<=6 && availability[index+pointDay]==1 && <Text style={styles.date}>{item}</Text>}
                 </TouchableOpacity>
               )}
               {index == 5 && (
@@ -260,8 +313,10 @@ const CalanderApointment = props => {
                     paddingHorizontal: 8,
                     borderRadius: 6,
                   }}>
-                  <Text style={styles.daysName}>{ans[index]}</Text>
-                  <Text style={styles.date}>{item}</Text>
+                   {(index+ pointDay>6 || (index+pointDay<=6 && availability[index+pointDay]==0 )) && <Text style={styles.redDay}>{ans[index]}</Text>}
+                  {(index+ pointDay>6 || (index+pointDay<=6 && availability[index+pointDay]==0 )) && <Text style={styles.redDate}>{item}</Text>}
+                  {index+pointDay<=6 && availability[index+pointDay]==1 && <Text style={styles.daysName}>{ans[index]}</Text>}
+                  {index+pointDay<=6 && availability[index+pointDay]==1 && <Text style={styles.date}>{item}</Text>}
                 </TouchableOpacity>
               )}
             </View>
@@ -572,6 +627,14 @@ const styles = StyleSheet.create({
   daysName: {
     color: AppColors.FontsColor,
     fontFamily: 'Poppins-Regular',
+  },
+  redDate:{
+    color: 'red',
+    fontFamily: 'Poppins-Regular',
+  },
+  redDay:{
+    color: 'red',
+    fontFamily: 'Poppins-SemiBold',
   },
   date: {
     color: AppColors.CardColor,

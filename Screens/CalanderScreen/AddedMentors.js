@@ -25,6 +25,7 @@ const AddedMentors = props => {
   const navigation = useNavigation();
   useEffect(() => {
     GetAllMentors(setAll);
+    //console.log(all);
   }, []);
   return (
     <View style={styles.screen}>
@@ -50,8 +51,11 @@ const AddedMentors = props => {
               <TouchableOpacity
                 style={{alignItems: 'center'}}
                 onPress={() => {
+                  //console.log(dates)
+                  // console.log(item);
                   navigation.navigate('apointment', {
                     dates: dates,
+                    mentor:item
                   });
                 }}>
                 <Image style={styles.Dp} source={{uri: item.image}} />

@@ -5,18 +5,23 @@ import {
   Dimensions,
   TouchableOpacity,
   Switch,
+  ToastAndroid
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState,useEffect,useContext} from 'react';
 import AppColors from '../../Constaint/AppColors';
 import Backbtn from '../../Componants/Backbtn';
 import LinearGradient from 'react-native-linear-gradient';
 import CustomBtn from '../../Componants/CustomBtn';
 import {useNavigation} from '@react-navigation/native';
-
+import { Button } from 'react-native-paper';
+import firestore from '@react-native-firebase/firestore';
+import { ScrollView } from 'react-native-gesture-handler';
+import { UserContext } from '../../App';
 const Width = Dimensions.get('window').width;
 const Height = Dimensions.get('window').height;
 
 const EditCalendar = () => {
+  const {state, dispatch} = useContext(UserContext);
   const [workingHour, setworkingHour] = useState(true);
   const [calendar, setCalendar] = useState(false);
   const [sunday, setSunday] = useState(false);
@@ -26,9 +31,38 @@ const EditCalendar = () => {
   const [thrusday, setThrusday] = useState(true);
   const [friday, setFriday] = useState(true);
   const [satuarday, setSatuarday] = useState(false);
-
+  const [availability,setAvailability]=useState([0,1,1,1,1,1,1]);
+  const [change,setChange]=useState(1);
   const navigation = useNavigation();
 
+
+  const showToast = (msg) => {
+    ToastAndroid.show(msg, ToastAndroid.SHORT);
+  };
+
+  useEffect(() => {
+    var switchChangeRecorder=[];
+    switchChangeRecorder[0]=sunday?1:0;
+    switchChangeRecorder[1]=monday?1:0;
+    switchChangeRecorder[2]=tuesday?1:0;
+    switchChangeRecorder[3]=wednesday?1:0;
+    switchChangeRecorder[4]=thrusday?1:0;
+    switchChangeRecorder[5]=friday?1:0;
+    switchChangeRecorder[6]=satuarday?1:0;
+    setAvailability(switchChangeRecorder);
+  }, [change]);
+  const handleSaveState=()=>{
+      console.log('I am clicked')
+      firestore().collection("Users").doc(state.email).update({
+        availability:availability
+      }).then(()=>{
+        console.log("success");
+        showToast("Availability saved succerssfully!");
+      }).catch(e=>{
+        showToast("Error in updating availability!");
+      })
+      //console.log(state.email)
+  }
   return (
     <View style={styles.screen}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -79,6 +113,8 @@ const EditCalendar = () => {
           }}
         />
       </View>
+      <ScrollView>
+     
       {workingHour ? (
         <View>
           <View
@@ -94,6 +130,7 @@ const EditCalendar = () => {
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => {
                 setSunday(previousState => !previousState);
+                setChange(!change);
               }}
               value={sunday}
             />
@@ -125,6 +162,7 @@ const EditCalendar = () => {
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => {
                 setMonday(previousState => !previousState);
+                setChange(!change);
               }}
               value={monday}
             />
@@ -156,6 +194,7 @@ const EditCalendar = () => {
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => {
                 setTuesday(previousState => !previousState);
+                setChange(!change);
               }}
               value={tuesday}
             />
@@ -187,6 +226,7 @@ const EditCalendar = () => {
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => {
                 setWednesday(previousState => !previousState);
+                setChange(!change);
               }}
               value={wednesday}
             />
@@ -218,6 +258,7 @@ const EditCalendar = () => {
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => {
                 setThrusday(previousState => !previousState);
+                setChange(!change);
               }}
               value={thrusday}
             />
@@ -249,6 +290,7 @@ const EditCalendar = () => {
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => {
                 setFriday(previousState => !previousState);
+                setChange(!change);
               }}
               value={friday}
             />
@@ -280,6 +322,7 @@ const EditCalendar = () => {
               ios_backgroundColor="#3e3e3e"
               onValueChange={() => {
                 setSatuarday(previousState => !previousState);
+                setChange(!change);
               }}
               value={satuarday}
             />
@@ -304,6 +347,11 @@ const EditCalendar = () => {
           <Text style={styles.headerTitle}>Here Write code For Calendar</Text>
         </View>
       )}
+       <View>
+        <Button onPress={handleSaveState}>Save</Button>
+      </View>
+      </ScrollView>
+      
     </View>
   );
 };
