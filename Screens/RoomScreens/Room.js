@@ -205,60 +205,6 @@ const Room = () => {
     }
   };
 
-  const commentPost = async (postId, post, text) => {
-    var list = [];
-
-    // console.log(text);
-
-    var comment = {
-      commentedby: firestore().collection('Users').doc(state.email),
-      commentid: generateString(8),
-      text,
-    };
-
-    setMessage('');
-
-    list = [...post.comments, comment];
-    // console.log(list);
-
-    try {
-      await firestore()
-        .collection('Posts')
-        .doc(postId)
-        .update({comments: list});
-
-      var list2 = [];
-      posts &&
-        posts.length > 0 &&
-        posts.map(post => {
-          if (post.id == postId) {
-            post.comments = list;
-          }
-          list2.push(post);
-        });
-      setPosts(list2);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const deleteCommentPost = async (postId, post, commentid) => {
-    var list = [];
-
-    list = post.comments.filter(comment => comment.commentid != commentid);
-
-    // console.log(list);
-
-    try {
-      await firestore()
-        .collection('Posts')
-        .doc(postId)
-        .update({comments: list});
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
     fetchPosts2();
   }, []);

@@ -37,6 +37,8 @@ import SavedMentorsList from '../Screens/MentorScreens/SavedMentorsList';
 import CalanderApointment from '../Screens/CalanderScreen/CalanderApointment';
 import AddedMentors from '../Screens/CalanderScreen/AddedMentors';
 import CommentsScreen from '../Screens/RoomScreens/CommentsScreen';
+import ChangePassword from '../Screens/ProfileScreens/ChangePassword';
+import TermConditions from '../Screens/ProfileScreens/Term&Conditions';
 const Stack = createNativeStackNavigator();
 
 export const HomeStack = () => {
@@ -161,6 +163,16 @@ export const HomeStack = () => {
       <Stack.Screen
         name="addedMontrs"
         component={AddedMentors}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="changepassword"
+        component={ChangePassword}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="terms"
+        component={TermConditions}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

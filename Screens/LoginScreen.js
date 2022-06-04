@@ -22,7 +22,7 @@ import {UserContext, ChatContext, SavedArticleContext} from '../App';
 import AlertBox from '../Componants/AlertBox';
 
 const LoginScreen = () => {
-  var [isSecure, setisSecure] = useState(true);
+  const [isSecure, setisSecure] = useState(true);
   const [email, setEmail] = useState('');
   const [emailerror, setemailerror] = useState(false);
   const [passerror, setpasserror] = useState(false);
